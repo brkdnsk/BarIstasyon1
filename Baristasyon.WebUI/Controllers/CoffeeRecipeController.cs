@@ -53,22 +53,38 @@ namespace Baristasyon.WebUI.Controllers
 
             var recipeResponse = await client.GetAsync($"coffeerecipe/{id}");
             var reviewResponse = await client.GetAsync($"review/recipe/{id}");
+            var ratingResponse = await client.GetAsync($"rating/average/{id}");
 
             if (!recipeResponse.IsSuccessStatusCode)
                 return NotFound();
 
             var recipeJson = await recipeResponse.Content.ReadAsStringAsync();
             var reviewJson = await reviewResponse.Content.ReadAsStringAsync();
+            var ratingJson = await ratingResponse.Content.ReadAsStringAsync();
+
+            var ratingDto = JsonConvert.DeserializeObject<AverageRatingDto>(ratingJson)!;
 
             var viewModel = new CoffeeRecipeDetailViewModel
             {
                 Recipe = JsonConvert.DeserializeObject<ResultCoffeeRecipeDto>(recipeJson)!,
                 Reviews = JsonConvert.DeserializeObject<List<ResultReviewDto>>(reviewJson)!,
-                NewReview = new CreateReviewDto { CoffeeRecipeId = id, UserId = 1 } // ← örnek userId
+                NewReview = new CreateReviewDto { CoffeeRecipeId = id, UserId = 1 }, // örnek user
+                AverageRating = ratingDto.Average,
+                RatingCount = ratingDto.Count,
+                NewRating = new CreateRatingDto { CoffeeRecipeId = id, UserId = 1 }  // örnek user
             };
 
             return View(viewModel);
         }
+        [HttpPost]
+        public async Task<IActionResult> Rate(CreateRatingDto dto)
+        {
+            var client = _httpClientFactory.CreateClient("api");
+            var response = await client.PostAsJsonAsync("rating", dto);
+
+            return RedirectToAction("Details", new { id = dto.CoffeeRecipeId });
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> AddReview(CreateReviewDto dto)

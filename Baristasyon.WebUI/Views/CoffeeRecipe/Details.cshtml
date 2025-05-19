@@ -56,4 +56,27 @@
             </form>
         </div>
     </div>
+    <div class="mb-3">
+        <strong>⭐ Ortalama Puan:</strong>
+        @Model.AverageRating.ToString("0.0") / 5
+        <span class="text-muted">(@Model.RatingCount oy)</span>
+    </div>
+    <form asp-action="Rate" method="post" class="mb-4">
+        <input type="hidden" asp-for="NewRating.UserId" />
+        <input type="hidden" asp-for="NewRating.CoffeeRecipeId" />
+
+        <label for="score">Puan Ver:</label>
+        <select asp-for="NewRating.Score" class="form-select w-auto d-inline-block ms-2 me-2">
+            <option value="1">⭐ 1</option>
+            <option value="2">⭐ 2</option>
+            <option value="3">⭐ 3</option>
+            <option value="4">⭐ 4</option>
+            <option value="5">⭐ 5</option>
+        </select>
+
+        <button type="submit" class="btn btn-sm btn-success">
+            <i class="fa fa-star me-1"></i> Oy Ver
+        </button>
+    </form>
+
 </div>

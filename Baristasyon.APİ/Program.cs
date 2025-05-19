@@ -22,6 +22,8 @@ builder.Services.AddScoped<IFavoriteRecipeService, FavoriteRecipeService>();
 builder.Services.AddScoped<IJobPostService, JobPostService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IRatingService, RatingService>();
+
 
 
 

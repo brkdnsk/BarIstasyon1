@@ -29,7 +29,9 @@
                     <p class="mb-1"><strong>Demleme:</strong> <span class="badge bg-secondary">@item.Method</span></p>
                     <p class="mb-1"><strong>Süre:</strong> <i class="fa-regular fa-clock me-1"></i>@item.BrewTime dakika</p>
 
-                    <a href="#" class="btn btn-sm btn-outline-coffee mt-auto">Detay</a>
+                    <a asp-action="Details" asp-controller="CoffeeRecipe" asp-route-id="@item.Id" class="btn btn-outline-primary">
+                        Detay
+                    </a>
                 </div>
             </div>
         </div>
