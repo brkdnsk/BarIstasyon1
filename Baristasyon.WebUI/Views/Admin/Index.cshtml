@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Admin Panel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4"><i class="fa-solid fa-lock me-2 text-danger"></i>Admin Paneli</h2>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <a href="/Admin/CoffeeRecipes" class="btn btn-outline-dark w-100 p-3">
+                <i class="fa-solid fa-mug-hot me-2"></i> Tarif Yönetimi
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="/Admin/Reviews" class="btn btn-outline-dark w-100 p-3">
+                <i class="fa-solid fa-comments me-2"></i> Yorum Yönetimi
+            </a>
+        </div>
+    </div>
+</div>

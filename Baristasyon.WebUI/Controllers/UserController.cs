@@ -33,7 +33,7 @@ namespace Baristasyon.WebUI.Controllers
 
         [HttpGet]
         public IActionResult Login() => View();
-
+       
         [HttpPost]
         public async Task<IActionResult> Login(LoginUserDto dto)
         {
@@ -52,9 +52,11 @@ namespace Baristasyon.WebUI.Controllers
             // ✅ Session’a kullanıcıyı kaydet
             HttpContext.Session.SetInt32("UserId", user.UserId);
             HttpContext.Session.SetString("Username", user.Username);
+            HttpContext.Session.SetInt32("IsAdmin", user.IsAdmin ? 1 : 0); // 🆕 admin kontrolü
 
             return RedirectToAction("Index", "Home");
         }
+
 
         // ✅ Oturumu sonlandır
         public IActionResult Logout()
@@ -69,5 +71,7 @@ namespace Baristasyon.WebUI.Controllers
     {
         public int UserId { get; set; }
         public string Username { get; set; } = null!;
+
+        public bool IsAdmin { get; set; } // ✅ Yeni alan
     }
 }
