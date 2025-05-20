@@ -1,9 +1,5 @@
 ﻿using Baristasyon.Application.Dtos;
 using Baristasyon.Application.Interfaces.Services;
-using Baristasyon.Persistence.Services;
-
-using Baristasyon.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Baristasyon.APİ.Controllers
@@ -59,25 +55,26 @@ namespace Baristasyon.APİ.Controllers
                 return NotFound();
             return NoContent();
         }
+
         [HttpGet("brew-method/{method}")]
         public async Task<IActionResult> GetByBrewMethod(string method)
         {
             var result = await _recipeService.GetByBrewMethodAsync(method);
             return Ok(result);
         }
+
         [HttpGet("search")]
         public async Task<IActionResult> Search([FromQuery] string keyword)
         {
             var results = await _recipeService.SearchByKeywordAsync(keyword);
             return Ok(results);
         }
+
         [HttpGet("top-favorites")]
         public async Task<IActionResult> GetTopFavorites([FromQuery] int count = 5)
         {
             var results = await _recipeService.GetTopFavoriteRecipesAsync(count);
             return Ok(results);
         }
-
-
     }
 }

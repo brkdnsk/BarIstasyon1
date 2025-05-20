@@ -2,7 +2,6 @@
 using Baristasyon.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Net.Http;
 
 namespace Baristasyon.WebUI.Controllers
 {
@@ -14,6 +13,7 @@ namespace Baristasyon.WebUI.Controllers
         {
             _httpClientFactory = httpClientFactory;
         }
+
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient("api");
@@ -27,73 +27,67 @@ namespace Baristasyon.WebUI.Controllers
 
             return View(data);
         }
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateCoffeeRecipeDto dto)
-        {
-            var client = _httpClientFactory.CreateClient("api");
-            var response = await client.PostAsJsonAsync("coffeerecipe", dto);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                ViewBag.Error = "Tarif eklenemedi.";
-                return View(dto);
-            }
-
-            return RedirectToAction("Index");
-        }
         public async Task<IActionResult> Details(int id)
         {
             var client = _httpClientFactory.CreateClient("api");
+            int userId = 1; // 🔐 ileride login olan kullanıcıdan alınacak
 
+            // ✅ Tarif verisi
             var recipeResponse = await client.GetAsync($"coffeerecipe/{id}");
-            var reviewResponse = await client.GetAsync($"review/recipe/{id}");
-            var ratingResponse = await client.GetAsync($"rating/average/{id}");
-
-            if (!recipeResponse.IsSuccessStatusCode)
-                return NotFound();
-
             var recipeJson = await recipeResponse.Content.ReadAsStringAsync();
-            var reviewJson = await reviewResponse.Content.ReadAsStringAsync();
+            var recipe = JsonConvert.DeserializeObject<ResultCoffeeRecipeDto>(recipeJson);
+
+            // ✅ Favori kontrol
+            var favoriteResponse = await client.GetAsync($"favoriterecipe/is-favorite?userId={userId}&recipeId={id}");
+            var isFav = JsonConvert.DeserializeObject<bool>(await favoriteResponse.Content.ReadAsStringAsync());
+
+            // ✅ Yorumlar
+            // ✅ Yorumlar
+            var reviewResponse = await client.GetAsync($"review/by-recipe/{id}");
+            List<ResultReviewDto> reviews = new();
+            if (reviewResponse.IsSuccessStatusCode)
+            {
+                var reviewJson = await reviewResponse.Content.ReadAsStringAsync();
+                reviews = JsonConvert.DeserializeObject<List<ResultReviewDto>>(reviewJson) ?? new();
+            }
+
+
+            // ✅ Puan verisi
+            var ratingResponse = await client.GetAsync($"rating/stats/{id}");
             var ratingJson = await ratingResponse.Content.ReadAsStringAsync();
+            var ratingStats = JsonConvert.DeserializeObject<RatingStatsDto>(ratingJson);
 
-            var ratingDto = JsonConvert.DeserializeObject<AverageRatingDto>(ratingJson)!;
-
+            // ✅ ViewModel
             var viewModel = new CoffeeRecipeDetailViewModel
             {
-                Recipe = JsonConvert.DeserializeObject<ResultCoffeeRecipeDto>(recipeJson)!,
-                Reviews = JsonConvert.DeserializeObject<List<ResultReviewDto>>(reviewJson)!,
-                NewReview = new CreateReviewDto { CoffeeRecipeId = id, UserId = 1 }, // örnek user
-                AverageRating = ratingDto.Average,
-                RatingCount = ratingDto.Count,
-                NewRating = new CreateRatingDto { CoffeeRecipeId = id, UserId = 1 }  // örnek user
+                Recipe = recipe!,
+                IsFavorite = isFav,
+                CurrentUserId = userId,
+                Reviews = reviews!,
+                NewReview = new CreateReviewDto
+                {
+                    UserId = userId,
+                    CoffeeRecipeId = id
+                },
+                AverageRating = ratingStats?.Average ?? 0,
+                RatingCount = ratingStats?.Count ?? 0,
+                NewRating = new CreateRatingDto
+                {
+                    UserId = userId,
+                    CoffeeRecipeId = id
+                }
             };
 
             return View(viewModel);
         }
-        [HttpPost]
-        public async Task<IActionResult> Rate(CreateRatingDto dto)
-        {
-            var client = _httpClientFactory.CreateClient("api");
-            var response = await client.PostAsJsonAsync("rating", dto);
-
-            return RedirectToAction("Details", new { id = dto.CoffeeRecipeId });
-        }
-
 
         [HttpPost]
-        public async Task<IActionResult> AddReview(CreateReviewDto dto)
+        public async Task<IActionResult> ToggleFavorite(int userId, int recipeId)
         {
             var client = _httpClientFactory.CreateClient("api");
-            var response = await client.PostAsJsonAsync("review", dto);
-
-            return RedirectToAction("Details", new { id = dto.CoffeeRecipeId });
+            await client.PostAsync($"favoriterecipe/toggle?userId={userId}&recipeId={recipeId}", null);
+            return RedirectToAction("Details", new { id = recipeId });
         }
-
     }
 }

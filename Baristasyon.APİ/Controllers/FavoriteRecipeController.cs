@@ -2,6 +2,7 @@
 using Baristasyon.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 
 namespace Baristasyon.APİ.Controllers
 {
@@ -74,6 +75,8 @@ namespace Baristasyon.APİ.Controllers
             var result = await _favoriteService.ToggleFavoriteAsync(userId, recipeId);
             return Ok(new { isNowFavorite = result });
         }
+
+
 
 
 

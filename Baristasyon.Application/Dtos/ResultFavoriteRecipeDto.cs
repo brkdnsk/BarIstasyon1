@@ -10,6 +10,7 @@ namespace Baristasyon.Application.Dtos
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public int RecipeTitle { get; set; }
         public int CoffeeRecipeId { get; set; }
         public DateTime AddedAt { get; set; }
     }
