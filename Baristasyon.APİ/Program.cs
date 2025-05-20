@@ -9,13 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 // ✅ Connection string
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// ✅ DbContext servisibuilder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
-builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
-
+// ✅ DbContext
 builder.Services.AddDbContext<BaristasyonDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// ✅ Service registration (BU KISIM builder.Build()'DAN ÖNCE OLMALI)
+// ✅ AutoMapper
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+// ✅ Dependency Injection - Service Registration
 builder.Services.AddScoped<ICoffeeRecipeService, CoffeeRecipeService>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<IFavoriteRecipeService, FavoriteRecipeService>();
@@ -24,16 +25,11 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 
-
-
-
-
-// ✅ Controller ve Swagger
+// ✅ Controllers + Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 🔨 Artık Build zamanı
 var app = builder.Build();
 
 // ✅ Middleware
@@ -43,6 +39,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection(); // 🔒 Güvenlik için önemli
+
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();

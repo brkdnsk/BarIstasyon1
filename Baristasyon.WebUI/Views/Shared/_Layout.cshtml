@@ -12,18 +12,18 @@
 
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
             background-color: #f4f1ea;
             color: #5e4b3c;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         .bg-coffee {
-            background-color: #8c7051;
+            background-color: #8c7051 !important;
         }
 
-        .navbar .nav-link {
-            color: #fff !important;
-            transition: color 0.3s ease;
+        .navbar .nav-link,
+        .navbar-brand {
+            color: #ffffff !important;
         }
 
             .navbar .nav-link:hover {
@@ -31,38 +31,37 @@
                 text-decoration: underline;
             }
 
+        .card-coffee {
+            background-color: #fff;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .card-coffee:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            }
+
+        .card-img-top {
+            object-fit: cover;
+            height: 180px;
+            border-bottom: 1px solid #ccc;
+        }
+
         .btn-coffee {
             background-color: #8c7051;
-            color: #fff;
-            border-radius: 12px;
+            color: white;
             border: none;
+            border-radius: 10px;
+            padding: 10px 16px;
         }
 
             .btn-coffee:hover {
                 background-color: #7a6044;
-                color: #fff;
             }
-
-        .card {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        input.form-control,
-        textarea.form-control,
-        select.form-select {
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            background-color: #fff;
-            color: #5e4b3c;
-        }
-
-        footer {
-            background-color: #f4f1ea;
-            color: #5e4b3c;
-        }
     </style>
 </head>
 <body>
@@ -91,17 +90,8 @@
                     <li class="nav-item"><a class="nav-link" href="/Equipment"><i class="fa-solid fa-gears me-1"></i>Ekipmanlar</a></li>
                     <li class="nav-item"><a class="nav-link" href="/JobPost"><i class="fa-solid fa-briefcase me-1"></i>İş İlanları</a></li>
 
-                    <!-- ✅ Favorilerim -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Favorite">
-                            <i class="fa-solid fa-heart me-1"></i> Favorilerim
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/AdminRating">
-                            <i class="fa-solid fa-star me-1"></i> Puanlar
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/Favorite"><i class="fa-solid fa-heart me-1"></i>Favorilerim</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/AdminRating"><i class="fa-solid fa-star me-1"></i>Puanlar</a></li>
 
                     <li class="nav-item"><a class="nav-link" href="/User/Login"><i class="fa-solid fa-right-to-bracket me-1"></i>Giriş</a></li>
                     <li class="nav-item"><a class="nav-link" href="/User/Register"><i class="fa-solid fa-user-plus me-1"></i>Kayıt Ol</a></li>
