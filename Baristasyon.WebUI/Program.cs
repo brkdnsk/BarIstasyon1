@@ -16,6 +16,9 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddSession(); // 🔹 AddServices kısmına
+
+
 
 // ✅ MVC + Razor + View
 builder.Services.AddControllersWithViews();
@@ -36,6 +39,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession(); // 🔹 UseRouting ile UseAuthorization arasına
 
 // ✅ Session middleware aktif edilmeli (routing'den sonra)
 app.UseSession();

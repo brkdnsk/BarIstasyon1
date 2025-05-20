@@ -49,12 +49,14 @@ namespace Baristasyon.WebUI.Controllers
             var json = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<LoginResultDto>(json);
 
+            // ✅ Session’a kullanıcıyı kaydet
             HttpContext.Session.SetInt32("UserId", user.UserId);
             HttpContext.Session.SetString("Username", user.Username);
 
             return RedirectToAction("Index", "Home");
         }
 
+        // ✅ Oturumu sonlandır
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
@@ -62,6 +64,7 @@ namespace Baristasyon.WebUI.Controllers
         }
     }
 
+    // ✅ API login sonucu için View tarafında kullanılacak model
     public class LoginResultDto
     {
         public int UserId { get; set; }

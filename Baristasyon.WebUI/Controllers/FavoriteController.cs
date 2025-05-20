@@ -35,6 +35,15 @@ namespace Baristasyon.WebUI.Controllers
             await client.PostAsync($"favoriterecipe/toggle?userId={userId}&recipeId={recipeId}", null);
             return RedirectToAction("Details", "CoffeeRecipe", new { id = recipeId });
         }
+        [HttpPost]
+        public async Task<IActionResult> Remove(int id)
+        {
+            var client = _httpClientFactory.CreateClient("api");
+            var response = await client.DeleteAsync($"favoriterecipe/{id}");
+
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

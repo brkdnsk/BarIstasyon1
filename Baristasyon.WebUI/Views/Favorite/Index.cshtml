@@ -21,15 +21,25 @@
                         <h5 class="card-title fw-bold text-coffee">
                             <i class="fa-solid fa-mug-saucer me-1"></i> @fav.RecipeTitle
                         </h5>
+                       
 
                         <div class="mt-2 text-muted small">
                             <i class="fa-regular fa-clock me-1"></i>
                             <span class="badge bg-light text-dark border">@fav.AddedAt.ToString("dd MMM yyyy")</span>
                         </div>
 
+
+
                         <a href="/CoffeeRecipe/Details/@fav.CoffeeRecipeId" class="btn btn-sm btn-outline-coffee mt-auto">
                             <i class="fa-solid fa-eye me-1"></i> Detay
-                        </a>
+						</a> 
+                        
+                        <form asp-action="Remove" method="post" class="mt-2">
+							<input type="hidden" name="id" value="@fav.Id" />
+							<button type="submit" class="btn btn-sm btn-outline-danger w-100">
+								<i class="fa fa-trash me-1"></i> Favoriden Kaldır
+							</button>
+						</form>
                     </div>
                 </div>
             </div>
