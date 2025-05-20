@@ -5,10 +5,7 @@ builder.Services.AddHttpClient("api", client =>
 {
     client.BaseAddress = new Uri("https://localhost:7030/api/"); // kendi API portun
 });
-builder.Services.AddHttpClient("api", client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7030/api/"); // senin API URL'in
-});
+
 // ✅ Session desteği
 builder.Services.AddSession(options =>
 {

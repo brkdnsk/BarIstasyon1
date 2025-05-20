@@ -31,81 +31,65 @@ namespace Baristasyon.WebUI.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var client = _httpClientFactory.CreateClient("api");
-            int userId = 1; // 🔐 ileride login olan kullanıcıdan alınacak
 
-            // ✅ Tarif verisi
+            // 1. Tarif detaylarını al
             var recipeResponse = await client.GetAsync($"coffeerecipe/{id}");
-            var recipeJson = await recipeResponse.Content.ReadAsStringAsync();
-            var recipe = JsonConvert.DeserializeObject<ResultCoffeeRecipeDto>(recipeJson);
+            var recipe = JsonConvert.DeserializeObject<ResultCoffeeRecipeDto>(await recipeResponse.Content.ReadAsStringAsync());
 
-            // ✅ Favori kontrol
-            var favoriteResponse = await client.GetAsync($"favoriterecipe/is-favorite?userId={userId}&recipeId={id}");
-            var isFav = JsonConvert.DeserializeObject<bool>(await favoriteResponse.Content.ReadAsStringAsync());
+            // 2. Yorumları al
+            var commentResponse = await client.GetAsync($"review/recipe/{id}");
+            var comments = JsonConvert.DeserializeObject<List<ResultReviewDto>>(await commentResponse.Content.ReadAsStringAsync());
 
-            // ✅ Yorumlar
-            // ✅ Yorumlar
-            var reviewResponse = await client.GetAsync($"review/by-recipe/{id}");
-            List<ResultReviewDto> reviews = new();
-            if (reviewResponse.IsSuccessStatusCode)
-            {
-                var reviewJson = await reviewResponse.Content.ReadAsStringAsync();
-                reviews = JsonConvert.DeserializeObject<List<ResultReviewDto>>(reviewJson) ?? new();
-            }
+            // 3. Ortalama puanı al
+            var ratingResponse = await client.GetAsync($"rating/average/{id}");
+            var ratingStats = JsonConvert.DeserializeObject<RatingStatsDto>(await ratingResponse.Content.ReadAsStringAsync());
 
+            // 4. Favori kontrolü (isteğe bağlı)
+            var userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+            var favResponse = await client.GetAsync($"favoriterecipe/is-favorite?userId={userId}&recipeId={id}");
+            var isFav = JsonConvert.DeserializeObject<bool>(await favResponse.Content.ReadAsStringAsync());
 
-            // ✅ Puan verisi
-            var ratingResponse = await client.GetAsync($"rating/stats/{id}");
-            var ratingJson = await ratingResponse.Content.ReadAsStringAsync();
-            var ratingStats = JsonConvert.DeserializeObject<RatingStatsDto>(ratingJson);
-
-            // ✅ ViewModel
+            // ViewModel oluştur
             var viewModel = new CoffeeRecipeDetailViewModel
             {
                 Recipe = recipe!,
+                Reviews = comments,
+                AverageRating = ratingStats.Average,
+                RatingCount = ratingStats.Count,
+                NewRating = new CreateRatingDto { UserId = userId, CoffeeRecipeId = id },
+                NewReview = new CreateReviewDto { UserId = userId, CoffeeRecipeId = id },
                 IsFavorite = isFav,
-                CurrentUserId = userId,
-                Reviews = reviews!,
-                NewReview = new CreateReviewDto
-                {
-                    UserId = userId,
-                    CoffeeRecipeId = id
-                },
-                AverageRating = ratingStats?.Average ?? 0,
-                RatingCount = ratingStats?.Count ?? 0,
-                NewRating = new CreateRatingDto
-                {
-                    UserId = userId,
-                    CoffeeRecipeId = id
-                }
+                CurrentUserId = userId
             };
 
             return View(viewModel);
         }
-        
-        
+
+
+
         [HttpPost]
         public async Task<IActionResult> AddReview(CreateReviewDto dto)
         {
             var client = _httpClientFactory.CreateClient("api");
+            await client.PostAsJsonAsync("review", dto);
 
-            var response = await client.PostAsJsonAsync("review", dto);
-
+            // ⬇️ Yorum eklendikten sonra tekrar Details'a yönlendirme
             return RedirectToAction("Details", new { id = dto.CoffeeRecipeId });
         }
 
 
-        
+
         [HttpPost]
         public async Task<IActionResult> Rate(CreateRatingDto dto)
         {
             var client = _httpClientFactory.CreateClient("api");
+            await client.PostAsJsonAsync("rating", dto);
 
-            var response = await client.PostAsJsonAsync("rating", dto);
-
+            // ⬇️ Puan verdikten sonra da tekrar detaylara yönlendir
             return RedirectToAction("Details", new { id = dto.CoffeeRecipeId });
         }
 
-        [HttpPost]
+        
         
 
 
