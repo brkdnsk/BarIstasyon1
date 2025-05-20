@@ -1,0 +1,51 @@
+﻿@using Baristasyon.Application.Dtos
+@model List<ResultReviewDto>
+@{
+    ViewData["Title"] = "Yorum Yönetimi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-coffee text-white rounded-top-4">
+            <h4 class="mb-0 py-2"><i class="fa-solid fa-comments me-2"></i>Yorum Yönetimi</h4>
+        </div>
+
+        <div class="card-body p-4 bg-light">
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info">Hiç yorum yapılmamış.</div>
+            }
+            else
+            {
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr class="text-uppercase small text-muted">
+                            <th>Kullanıcı</th>
+                            <th>Yorum</th>
+                            <th>Tarih</th>
+                            <th>Aksiyon</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var comment in Model)
+                        {
+                            <tr>
+                                <td>@comment.Username</td>
+                                <td>@comment.Comment</td>
+                                <td class="text-muted">@comment.CreatedAt.ToString("dd MMM yyyy HH:mm")</td>
+                                <td>
+                                    <form asp-action="Delete" method="post" asp-route-id="@comment.Id" onsubmit="return confirm('Yorumu silmek istediğinize emin misiniz?');">
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>

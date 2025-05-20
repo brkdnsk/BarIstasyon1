@@ -1,0 +1,82 @@
+﻿@using Baristasyon.Application.Dtos
+@model List<ResultCoffeeRecipeDto>
+
+@{
+    ViewData["Title"] = "Tarif Yönetimi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-coffee text-white rounded-top-4">
+            <h4 class="mb-0 py-2"><i class="fa-solid fa-mug-hot me-2"></i>Tarif Yönetimi</h4>
+        </div>
+
+        <div class="card-body p-4">
+            @if (!Model.Any())
+            {
+                <div class="alert alert-warning text-center">Hiç tarif bulunamadı.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle text-center">
+                        <thead class="table-light">
+                            <tr class="text-uppercase text-muted small">
+                                <th>Başlık</th>
+                                <th>Demleme</th>
+                                <th>Süre</th>
+                                <th>Aksiyonlar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var recipe in Model)
+                            {
+                                <tr>
+                                    <td class="fw-semibold text-coffee">@recipe.Title</td>
+                                    <td>@recipe.Method</td>
+                                    <td>@recipe.BrewTime dk</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-sm btn-outline-warning me-2">
+                                            <i class="fa fa-pen"></i>
+                                        </a>
+
+                                        <form asp-action="Delete" method="post" asp-route-id="@recipe.Id" class="d-inline" onsubmit="return confirm('Tarifi silmek istediğine emin misin?');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .text-coffee {
+        color: #8c7051;
+    }
+
+    .bg-coffee {
+        background-color: #8c7051 !important;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f8f4ee;
+    }
+
+    .btn-outline-warning:hover {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+</style>
