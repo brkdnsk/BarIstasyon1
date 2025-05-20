@@ -1,12 +1,6 @@
 ﻿using AutoMapper;
 using Baristasyon.Application.Dtos;
 using Baristasyon.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Baristasyon.Application.MappingProfile
 {
@@ -14,28 +8,40 @@ namespace Baristasyon.Application.MappingProfile
     {
         public MappingProfile()
         {
+            // ☕ CoffeeRecipe
             CreateMap<CoffeeRecipe, ResultCoffeeRecipeDto>().ReverseMap();
             CreateMap<CreateCoffeeRecipeDto, CoffeeRecipe>();
             CreateMap<UpdateCoffeeRecipeDto, CoffeeRecipe>();
 
-            CreateMap<Equipment,ResultEquipmentDto>().ReverseMap();
+            // 🛠 Equipment
+            CreateMap<Equipment, ResultEquipmentDto>().ReverseMap();
             CreateMap<CreateEquipmentDto, Equipment>();
             CreateMap<UpdateEquipmentDto, Equipment>();
 
+            // 💖 FavoriteRecipe
             CreateMap<FavoriteRecipe, ResultFavoriteRecipeDto>().ReverseMap();
             CreateMap<CreateFavoriteRecipeDto, FavoriteRecipe>();
             CreateMap<UpdateFavoriteRecipeDto, FavoriteRecipe>();
 
+            // 💼 JobPost
             CreateMap<JobPost, ResultJobPostDto>().ReverseMap();
             CreateMap<CreateJobPostDto, JobPost>();
             CreateMap<UpdateJobPostDto, JobPost>();
 
-            CreateMap<User, ResultJobPostDto>().ReverseMap();
-            CreateMap<CreateJobPostDto, JobPost>();
-            CreateMap<UpdateJobPostDto, JobPost>();
-
+            // 🧑‍💻 User
             CreateMap<User, ResultUserDto>().ReverseMap();
+            CreateMap<RegisterUserDto, User>();
+            CreateMap<LoginUserDto, User>();
+            CreateMap<UpdateUserProfileDto, User>();
+            CreateMap<UpdatePasswordDto, User>();
 
+            // ⭐ Rating
+            CreateMap<Rating, ResultRatingDto>().ReverseMap();
+            CreateMap<CreateRatingDto, Rating>();
+
+            // 💬 Review
+            CreateMap<Review, ResultReviewDto>().ReverseMap();
+            CreateMap<CreateReviewDto, Review>();
         }
     }
 }
