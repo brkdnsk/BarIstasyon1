@@ -32,24 +32,19 @@ namespace Baristasyon.WebUI.Controllers
         {
             var client = _httpClientFactory.CreateClient("api");
 
-            // 1. Tarif detaylarını al
             var recipeResponse = await client.GetAsync($"coffeerecipe/{id}");
             var recipe = JsonConvert.DeserializeObject<ResultCoffeeRecipeDto>(await recipeResponse.Content.ReadAsStringAsync());
 
-            // 2. Yorumları al
             var commentResponse = await client.GetAsync($"review/recipe/{id}");
             var comments = JsonConvert.DeserializeObject<List<ResultReviewDto>>(await commentResponse.Content.ReadAsStringAsync());
 
-            // 3. Ortalama puanı al
             var ratingResponse = await client.GetAsync($"rating/average/{id}");
             var ratingStats = JsonConvert.DeserializeObject<RatingStatsDto>(await ratingResponse.Content.ReadAsStringAsync());
 
-            // 4. Favori kontrolü (isteğe bağlı)
             var userId = HttpContext.Session.GetInt32("UserId") ?? 0;
             var favResponse = await client.GetAsync($"favoriterecipe/is-favorite?userId={userId}&recipeId={id}");
             var isFav = JsonConvert.DeserializeObject<bool>(await favResponse.Content.ReadAsStringAsync());
 
-            // ViewModel oluştur
             var viewModel = new CoffeeRecipeDetailViewModel
             {
                 Recipe = recipe!,
@@ -67,41 +62,35 @@ namespace Baristasyon.WebUI.Controllers
 
 
 
+
         [HttpPost]
         public async Task<IActionResult> AddReview(CreateReviewDto dto)
         {
             var client = _httpClientFactory.CreateClient("api");
             await client.PostAsJsonAsync("review", dto);
-
-            // ⬇️ Yorum eklendikten sonra tekrar Details'a yönlendirme
-            return RedirectToAction("Details", new { id = dto.CoffeeRecipeId });
+            return RedirectToAction("Details", new { id = dto.CoffeeRecipeId }); // ✅ Önemli
         }
-
-
 
         [HttpPost]
         public async Task<IActionResult> Rate(CreateRatingDto dto)
         {
             var client = _httpClientFactory.CreateClient("api");
             await client.PostAsJsonAsync("rating", dto);
-
-            // ⬇️ Puan verdikten sonra da tekrar detaylara yönlendir
-            return RedirectToAction("Details", new { id = dto.CoffeeRecipeId });
+            return RedirectToAction("Details", new { id = dto.CoffeeRecipeId }); // ✅ Önemli
         }
 
+
+
         
-        
-
-
-
-
 
         [HttpPost]
         public async Task<IActionResult> ToggleFavorite(int userId, int recipeId)
         {
             var client = _httpClientFactory.CreateClient("api");
             await client.PostAsync($"favoriterecipe/toggle?userId={userId}&recipeId={recipeId}", null);
-            return RedirectToAction("Details", new { id = recipeId });
+
+            return RedirectToAction("Details", new { id = recipeId }); // ✅ DOĞRU
         }
+
     }
 }

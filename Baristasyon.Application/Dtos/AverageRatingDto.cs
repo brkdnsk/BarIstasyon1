@@ -11,4 +11,5 @@ namespace Baristasyon.Application.Dtos
         public double Average { get; set; }
         public int Count { get; set; }
     }
+
 }
