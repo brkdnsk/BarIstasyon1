@@ -53,8 +53,9 @@
         </div>
         <div class="card-body">
             <form asp-action="AddReview" method="post">
-                <input type="hidden" asp-for="NewReview.UserId" />
-                <input type="hidden" asp-for="NewReview.CoffeeRecipeId" />
+                <input type="hidden" asp-for="NewReview.UserId" value="@Context.Session.GetInt32("UserId")" />
+                <input type="hidden" asp-for="NewReview.CoffeeRecipeId" value="@Model.Recipe.Id" />
+
 
                 <div class="mb-3">
                     <textarea asp-for="NewReview.Comment" class="form-control" placeholder="Yorumunuzu yazın..." rows="4"></textarea>
@@ -74,8 +75,9 @@
     </div>
 
     <form asp-action="Rate" method="post" class="mb-4">
-        <input type="hidden" asp-for="NewRating.UserId" />
-        <input type="hidden" asp-for="NewRating.CoffeeRecipeId" />
+        <input type="hidden" asp-for="NewRating.UserId" value="@Context.Session.GetInt32("UserId")" />
+        <input type="hidden" asp-for="NewRating.CoffeeRecipeId" value="@Model.Recipe.Id" />
+
 
         <label for="score">Puan Ver:</label>
         <select asp-for="NewRating.Score" class="form-select w-auto d-inline-block ms-2 me-2">
