@@ -13,7 +13,7 @@ namespace Baristasyon.Application.Dtos
         public int CoffeeRecipeId { get; set; }
         public int Score { get; set; }
         public DateTime RatedAt { get; set; }
-
+        public DateTime CreatedAt { get; set; }
         public string Username { get; set; } = null!;
         public string RecipeTitle { get; set; } = null!;
     }

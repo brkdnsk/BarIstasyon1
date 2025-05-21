@@ -1,0 +1,76 @@
+﻿@using Baristasyon.Application.Dtos
+@model UserProfileViewModel
+@{
+    ViewData["Title"] = "Profilim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-brown"><i class="fa-solid fa-user-circle me-2"></i>Profilim</h2>
+
+    <!-- Yorumlar -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-light text-brown fw-bold">
+            <i class="fa fa-comments me-1 text-coffee"></i>Yorumlarım
+        </div>
+        <div class="card-body">
+            @if (Model.Comments.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <li class="list-group-item">
+                            <strong>@comment.Comment</strong>
+                            <div class="text-muted small">
+                                Tarif ID: @comment.CoffeeRecipeId | @comment.CreatedAt.ToString("dd MMM yyyy HH:mm")
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="text-muted">Hiç yorum yapılmamış.</div>
+            }
+        </div>
+    </div>
+
+    <!-- Puanlar -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-light text-brown fw-bold">
+            <i class="fa fa-star me-1 text-warning"></i>Verdiğim Puanlar
+        </div>
+        <div class="card-body">
+            @if (Model.Ratings.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var rating in Model.Ratings)
+                    {
+                        <li class="list-group-item">
+                            ⭐ <strong>@rating.Score</strong> puan verdiniz (Tarif ID: @rating.CoffeeRecipeId)
+                            <div class="text-muted small">@rating.CreatedAt.ToString("dd MMM yyyy HH:mm")</div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="text-muted">Henüz puan verilmemiş.</div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .text-brown {
+        color: #5e4b3c;
+    }
+
+    .text-coffee {
+        color: #8c7051;
+    }
+
+    .card {
+        border-radius: 12px;
+    }
+</style>
