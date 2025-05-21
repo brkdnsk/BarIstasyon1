@@ -20,22 +20,23 @@ namespace Baristasyon.Persistence.Services
             _context = context;
         }
 
-        public async Task<List<ResultReviewDto>> GetByRecipeIdAsync(int coffeeRecipeId)
+        public async Task<List<ResultReviewDto>> GetByRecipeIdAsync(int recipeId)
         {
-            var reviews = await _context.Reviews
-                .Where(x => x.CoffeeRecipeId == coffeeRecipeId)
-                .OrderByDescending(x => x.CreatedAt)
+            var comments = await _context.Reviews
+                .Include(navigationPropertyPath: r => r.User)
+                .Where(r => r.CoffeeRecipeId == recipeId)
+                .Select(r => new ResultReviewDto
+                {
+                    Id = r.Id,
+                    UserId = r.UserId,
+                    CoffeeRecipeId = r.CoffeeRecipeId,
+                    Comment = r.Comment,
+                    CreatedAt = r.CreatedAt,
+                    Username = r.User.Username // 👈 Burada User tablosundan çekiyoruz
+                })
                 .ToListAsync();
 
-            // Dummy username atanıyor. Gerçek sistemde UserService'den alınmalı.
-            return reviews.Select(r => new ResultReviewDto
-            {
-                Id = r.Id,
-                UserId = r.UserId,
-                Username = $"Kullanıcı {r.UserId}",
-                Comment = r.Comment,
-                CreatedAt = r.CreatedAt
-            }).ToList();
+            return comments;
         }
 
         public async Task<bool> CreateAsync(CreateReviewDto dto)

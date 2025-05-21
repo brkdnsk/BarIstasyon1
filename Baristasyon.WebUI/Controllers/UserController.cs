@@ -1,4 +1,5 @@
 ﻿using Baristasyon.Application.Dtos;
+using Baristasyon.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -64,6 +65,32 @@ namespace Baristasyon.WebUI.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
+        public async Task<IActionResult> MyProfile()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null) return RedirectToAction("Login");
+
+            var client = _httpClientFactory.CreateClient("api");
+
+            // Yorumlar
+            var commentsResponse = await client.GetAsync($"review/user/{userId}");
+            var commentsJson = await commentsResponse.Content.ReadAsStringAsync();
+            var userComments = JsonConvert.DeserializeObject<List<ResultReviewDto>>(commentsJson);
+
+            // Puanlar
+            var ratingsResponse = await client.GetAsync($"rating/user/{userId}");
+            var ratingsJson = await ratingsResponse.Content.ReadAsStringAsync();
+            var userRatings = JsonConvert.DeserializeObject<List<ResultRatingDto>>(ratingsJson);
+
+            var model = new UserProfileViewModel
+            {
+                Comments = userComments!,
+                Ratings = userRatings!
+            };
+
+            return View(model);
+        }
+
     }
 
     // ✅ API login sonucu için View tarafında kullanılacak model

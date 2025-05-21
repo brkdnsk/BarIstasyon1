@@ -9,13 +9,14 @@ namespace Baristasyon.Domain.Entities
     public class Review
     {
         public int Id { get; set; }
-        public int UserId { get; set; } // Yorumu yapan kullanıcı
-        public int CoffeeRecipeId { get; set; } // Hangi tarife yapıldı
+        public int UserId { get; set; }
+        public int CoffeeRecipeId { get; set; }
         public string Comment { get; set; } = null!;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
 
-        // opsiyonel navigationlar
-        public CoffeeRecipe? CoffeeRecipe { get; set; }
+        // 👇 Bu navigation property'yi ekle
+        public User User { get; set; } = null!;
     }
+
 
 }
