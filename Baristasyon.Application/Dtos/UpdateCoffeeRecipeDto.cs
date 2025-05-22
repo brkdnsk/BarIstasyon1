@@ -9,6 +9,7 @@ namespace Baristasyon.Application.Dtos
     public class UpdateCoffeeRecipeDto
     {
         public string Title { get; set; } = null!;
+        public string Id { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string Method { get; set; } = null!;
         public int BrewTime { get; set; }

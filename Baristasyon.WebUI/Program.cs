@@ -20,6 +20,7 @@ builder.Services.AddControllersWithViews();
 // ✅ AutoMapper (MappingProfile sınıfını kullanacak şekilde)
 builder.Services.AddAutoMapper(typeof(Baristasyon.Application.MappingProfile.MappingProfile));
 
+
 var app = builder.Build();
 
 
@@ -37,6 +38,8 @@ app.UseRouting();
 
 // ✅ Session middleware mutlaka burada olmalı
 app.UseSession();
+
+
 
 app.UseAuthorization();
 

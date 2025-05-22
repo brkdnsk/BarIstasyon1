@@ -3,6 +3,7 @@ using System;
 using Baristasyon.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Baristasyon.Persistence.Migrations
 {
     [DbContext(typeof(BaristasyonDbContext))]
-    partial class BaristasyonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250522192912_ImageUrlFinalFix")]
+    partial class ImageUrlFinalFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
