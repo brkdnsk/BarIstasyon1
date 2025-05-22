@@ -8,7 +8,10 @@ namespace Baristasyon.Application.Dtos
 {
     public class CreateEquipmentDto
     {
-        public string UserId { get; set; } = null!;
+        public int UserId { get; set; }
+        public string Name { get; set; } = null!;
+
+        public string Description { get; set; } = null!;
         public int CoffeeRecipeId { get; set; }
 
         public string ImageUrl { get; set; } = null!;

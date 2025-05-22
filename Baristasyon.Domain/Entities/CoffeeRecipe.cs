@@ -15,6 +15,8 @@ namespace Baristasyon.Domain.Entities
         public int BrewTime { get; set; } // dakika cinsinden
         public string Ingredients { get; set; } = null!;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string? ImageUrl { get; set; }
+
     }
 }
 
