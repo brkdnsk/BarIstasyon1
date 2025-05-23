@@ -2,67 +2,69 @@
 @model List<ResultEquipmentDto>
 
 @{
-	ViewData["Title"] = "Demleme Ekipmanları";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Ekipmanlar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5"> <div class="d-flex justify-content-between align-items-center mb-4"> <h2 class="text-coffee fw-bold"><i class="fa-solid fa-gears me-2"></i>Ekipman Yönetimi</h2> <a asp-action="Create" class="btn btn-coffee shadow-sm"> <i class="fa fa-plus me-1"></i> Yeni Ekipman </a> </div>
-@if (!Model.Any())
-{
-        <div class="alert alert-warning">Herhangi bir ekipman kaydı bulunamadı.</div>
-}
-else
-{
-        <div class="table-responsive">
-            <table class="table table-hover shadow-sm border bg-white rounded-4">
-                <thead class="table-light">
-                    <tr class="text-uppercase text-muted small">
-                        <th>Ad</th>
-                        <th>Açıklama</th>
-                        <th class="text-end">Aksiyonlar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td class="fw-semibold">@item.Name</td>
-                            <td>@item.Description</td>
-                            <td class="text-end">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-2">
-                                    <i class="fa fa-pen"></i>
-                                </a>
-                                <form asp-action="Delete" method="post" asp-route-id="@item.Id" class="d-inline"
-                                      onsubmit="return confirm('Bu ekipmanı silmek istediğinize emin misiniz?');">
-                                    <button type="submit" class="btn btn-sm btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-coffee">Ekipmanlar</h2>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fa fa-plus me-1"></i> Yeni Ekipman
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center">Hiç ekipman bulunamadı.</div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="@item.ImageUrl" alt="Kahve Görseli" class="img-fluid" />
+                        <div class="card-body">
+                            <h5 class="card-title text-coffee">@item.Name</h5>
+                            <p class="card-text">@item.Description</p>
+                            <p class="text-muted small">🔧 <strong>Kullanım:</strong> @item.Usage</p>
+                        </div>
+                        <div class="card-footer bg-white border-0 d-flex justify-content-between">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                                <i class="fa fa-edit me-1"></i> Düzenle
+                            </a>
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="get" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?');">
+                                    <i class="fa fa-trash me-1"></i> Sil
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     }
 </div>
-<style>    .text-coffee {
-        color: #5e4b3c;
+
+<style>
+    .text-coffee {
+        color: #8c7051;
     }
 
-    .btn-coffee {
+    .btn-primary {
         background-color: #8c7051;
-        color: #fff;
-        border-radius: 10px;
-        padding: 8px 16px;
+        border-color: #8c7051;
     }
 
-        .btn-coffee:hover {
+        .btn-primary:hover {
             background-color: #7a6044;
-            color: #fff;
+            border-color: #7a6044;
         }
 
-    .table td, .table th {
-        vertical-align: middle;
+    .card {
+        border-radius: 14px;
     }
 </style>
+
