@@ -12,6 +12,8 @@ namespace Baristasyon.Application.MappingProfile
             CreateMap<CoffeeRecipe, ResultCoffeeRecipeDto>().ReverseMap();
             CreateMap<CreateCoffeeRecipeDto, CoffeeRecipe>();
             CreateMap<UpdateCoffeeRecipeDto, CoffeeRecipe>();
+            CreateMap<CoffeeRecipe, ResultCoffeeRecipeDto>();
+
 
             // 🛠 Equipment
             CreateMap<Equipment, ResultEquipmentDto>().ReverseMap();

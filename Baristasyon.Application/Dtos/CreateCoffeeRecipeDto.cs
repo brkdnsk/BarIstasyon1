@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Baristasyon.Application.Dtos
@@ -13,7 +14,7 @@ namespace Baristasyon.Application.Dtos
         public string Method { get; set; } = null!;
         public int BrewTime { get; set; }
         public string Ingredients { get; set; } = null!;
-        public string? ImageUrl { get; set; }
+        public string ImageUrl { get; set; }
 
-    }
+    }  
 }

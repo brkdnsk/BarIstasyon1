@@ -10,7 +10,8 @@
             <!-- Tarif Kartı -->
             <div class="card shadow-lg border-0 mb-4">
                 <div class="card-body text-center">
-                    <img src="/images/coffee-placeholder.png" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover; background-color: #f4f1ea;" />
+                    <img src="@Model.Recipe.ImageUrl" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover; background-color: #f4f1ea;" alt="Tarif Görseli" />
+
                     <h2 class="text-coffee fw-bold">@Model.Recipe.Title</h2>
                     <p class="text-muted">@Model.Recipe.Description</p>
 

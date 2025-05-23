@@ -2,7 +2,7 @@
 using Baristasyon.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Baristasyon.APİ.Controllers
+namespace Baristasyon.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -34,13 +34,20 @@ namespace Baristasyon.APİ.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateCoffeeRecipeDto dto)
         {
-            var created = await _recipeService.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            var result = await _recipeService.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
+
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateCoffeeRecipeDto dto)
+        public async Task<IActionResult> Update(int id, UpdateCoffeeRecipeDto dto)
         {
+            if (!string.IsNullOrWhiteSpace(dto.ImageUrl))
+            {
+                dto.ImageUrl = "/images/" + dto.ImageUrl;
+            }
+
             var success = await _recipeService.UpdateAsync(id, dto);
             if (!success)
                 return NotFound();
@@ -54,27 +61,6 @@ namespace Baristasyon.APİ.Controllers
             if (!success)
                 return NotFound();
             return NoContent();
-        }
-
-        [HttpGet("brew-method/{method}")]
-        public async Task<IActionResult> GetByBrewMethod(string method)
-        {
-            var result = await _recipeService.GetByBrewMethodAsync(method);
-            return Ok(result);
-        }
-
-        [HttpGet("search")]
-        public async Task<IActionResult> Search([FromQuery] string keyword)
-        {
-            var results = await _recipeService.SearchByKeywordAsync(keyword);
-            return Ok(results);
-        }
-
-        [HttpGet("top-favorites")]
-        public async Task<IActionResult> GetTopFavorites([FromQuery] int count = 5)
-        {
-            var results = await _recipeService.GetTopFavoriteRecipesAsync(count);
-            return Ok(results);
         }
     }
 }
