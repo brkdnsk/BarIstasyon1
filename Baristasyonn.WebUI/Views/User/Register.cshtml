@@ -1,0 +1,61 @@
+﻿@model RegisterUserDto
+@{
+    ViewData["Title"] = "Kayıt Ol";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .auth-card {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        margin-top: 40px;
+    }
+
+        .auth-card h2 {
+            text-align: center;
+            color: #6f4e37;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+    .form-control:focus {
+        border-color: #6f4e37;
+        box-shadow: 0 0 0 0.2rem rgba(111, 78, 55, 0.25);
+    }
+
+    .btn-register {
+        background-color: #4caf50;
+        border: none;
+    }
+
+        .btn-register:hover {
+            background-color: #43a047;
+        }
+</style>
+
+<div class="auth-card">
+    <h2><i class="bi bi-person-plus me-2"></i>Kayıt Ol</h2>
+
+    <form method="post">
+        <div class="mb-3">
+            <input asp-for="Username" class="form-control" placeholder="Kullanıcı Adı" />
+        </div>
+        <div class="mb-3">
+            <input asp-for="Email" class="form-control" placeholder="Email" />
+        </div>
+        <div class="mb-3">
+            <input asp-for="Password" type="password" class="form-control" placeholder="Şifre" />
+        </div>
+
+        <button type="submit" class="btn btn-register text-white w-100">Kayıt Ol</button>
+    </form>
+
+    @if (ViewBag.ApiError != null)
+    {
+        <div class="alert alert-danger mt-3">@ViewBag.ApiError</div>
+    }
+</div>

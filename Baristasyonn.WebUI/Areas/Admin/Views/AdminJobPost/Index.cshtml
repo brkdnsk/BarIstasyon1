@@ -1,0 +1,49 @@
+﻿@model List<Baristasyon.Application.Dtos.ResultJobPostDto>
+@{
+    ViewData["Title"] = "İş İlanları";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-4">📄 İş İlanları</h2>
+
+<a href="/Admin/AdminJobPost/Create" class="btn btn-success mb-3">➕ Yeni İlan Ekle</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Başlık</th>
+            <th>Şirket</th>
+            <th>Konum</th>
+            <th>İlan Tarihi</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Title</td>
+                    <td>@item.CompanyName</td>
+                    <td>@item.Location</td>
+                    <td>@item.PostedAt.ToShortDateString()</td>
+                    <td>
+                        <a href="/Admin/AdminJobPost/Edit/@item.Id" class="btn btn-sm btn-primary">Düzenle</a>
+                        <form asp-action="Delete" method="post" asp-route-id="@item.Id" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?')">Sil</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">İlan bulunamadı.</td>
+            </tr>
+        }
+    </tbody>
+</table>

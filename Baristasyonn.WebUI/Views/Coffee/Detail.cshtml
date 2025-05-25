@@ -1,0 +1,93 @@
+﻿@model CoffeeRecipeDetailViewModel
+@{
+    ViewData["Title"] = Model.Recipe.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userId = Context.Session.GetInt32("userId");
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Tarif Kartı -->
+            <div class="card shadow-lg">
+                <img src="@Model.Recipe.ImageUrl" class="card-img-top" style="height: 300px; object-fit: cover;" />
+                <div class="card-body">
+                    <h2 class="card-title">@Model.Recipe.Title</h2>
+                    <p class="card-text text-muted">@Model.Recipe.Description</p>
+                    <hr />
+                    <p><strong>Demleme Yöntemi:</strong> @Model.Recipe.Method</p>
+                    <p><strong>Demleme Süresi:</strong> @Model.Recipe.BrewTime dk</p>
+                    <p><strong>Malzemeler:</strong> @Model.Recipe.Ingredients</p>
+
+                    <hr />
+                    <h5>⭐ Ortalama Puan: @Model.AverageRating.ToString("0.0") / 5</h5>
+
+                    @if (userId != null)
+                    {
+                        <form asp-controller="Rating" asp-action="Rate" method="post" class="mb-3">
+                            <input type="hidden" name="UserId" value="@userId" />
+                            <input type="hidden" name="CoffeeRecipeId" value="@Model.Recipe.Id" />
+                            <label for="Score">Puanınız:</label>
+                            <select name="Score" class="form-select w-auto d-inline mx-2">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-warning">Puanla</button>
+                        </form>
+
+                        <form method="post" asp-controller="Favorite" asp-action="Toggle" asp-route-recipeId="@Model.Recipe.Id">
+                            <input type="hidden" name="userId" value="@userId" />
+                            <button type="submit" class="btn btn-outline-danger">
+                                ❤️ Favoriye Ekle / Kaldır
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Favori & puanlama için giriş yapmalısınız.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Yorumlar -->
+            <div class="mt-4">
+                <h5>💬 Yorumlar</h5>
+
+                @if (Model.Reviews.Any())
+                {
+                    foreach (var review in Model.Reviews)
+                    {
+                        <div class="border-bottom mb-2 pb-2">
+                            <strong>@review.Username</strong>
+                            <p class="mb-1">@review.Comment</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-muted">Henüz yorum yapılmamış.</p>
+                }
+
+                @if (userId != null)
+                {
+                    <form asp-controller="Review" asp-action="Post" method="post" class="mt-3">
+                        <input type="hidden" name="CoffeeRecipeId" value="@Model.Recipe.Id" />
+                        <input type="hidden" name="UserId" value="@userId" />
+                        <div class="mb-2">
+                            <textarea name="Comment" class="form-control" placeholder="Yorumunuzu yazın..."></textarea>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Yorum Ekle</button>
+                    </form>
+                }
+                else
+                {
+                    <p class="text-muted">Yorum eklemek için giriş yapmalısınız.</p>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@model CreateEquipmentDto
+
+@{
+    ViewData["Title"] = "Yeni Ekipman Ekle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (ViewBag.ApiError != null)
+{
+    <div class="alert alert-danger">@ViewBag.ApiError</div>
+}
+
+<h2 class="mb-4">➕ Yeni Ekipman Ekle</h2>
+
+<form asp-area="Admin" asp-controller="AdminEquipment" asp-action="Create" method="post">
+    <div class="mb-3">
+        <label class="form-label">Ad</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Açıklama</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Kullanım</label>
+        <textarea asp-for="Usage" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Tarif ID</label>
+        <input asp-for="CoffeeRecipeId" type="number" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Görsel URL</label>
+        <input asp-for="ImageUrl" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Kullanıcı ID (test için)</label>
+        <input asp-for="UserId" type="number" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <a href="/Admin/AdminEquipment" class="btn btn-secondary">İptal</a>
+</form>

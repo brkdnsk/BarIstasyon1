@@ -1,0 +1,16 @@
+﻿@model ResultJobPostDto
+@{
+    ViewData["Title"] = @Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-4">
+    <h2 class="mb-3">@Model.Title</h2>
+    <p class="text-muted">@Model.CompanyName • @Model.Location</p>
+    <p><strong>İlan Tarihi:</strong> @Model.PostedAt.ToString("dd MMM yyyy")</p>
+    <hr />
+    <p>@Model.Description</p>
+    <p><strong>İletişim:</strong> <a href="mailto:@Model.ContactEmail">@Model.ContactEmail</a></p>
+
+    <a href="/JobPost" class="btn btn-secondary mt-3">← Tüm İlanlara Dön</a>
+</div>

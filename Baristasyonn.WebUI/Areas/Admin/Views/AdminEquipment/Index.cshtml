@@ -1,0 +1,37 @@
+﻿@model List<Baristasyon.Application.Dtos.ResultEquipmentDto>
+@{
+    ViewData["Title"] = "Ekipmanlar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-4">🔧 Ekipman Listesi</h2>
+
+<a class="btn btn-primary mb-3" href="/Admin/AdminEquipment/Create">+ Yeni Ekipman</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Görsel</th>
+            <th>Ad</th>
+            <th>Kullanım</th>
+            <th>Tarif ID</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><img src="@item.ImageUrl" width="80" height="80" style="object-fit: cover;" /></td>
+                <td>@item.Name</td>
+                <td>@item.Usage</td>
+                
+                <td>
+                    <a class="btn btn-sm btn-warning" href="/Admin/AdminEquipment/Edit/@item.Id">Güncelle</a>
+                    <a class="btn btn-sm btn-danger" href="/Admin/AdminEquipment/Delete/@item.Id"
+                       onclick="return confirm('Bu ekipmanı silmek istiyor musunuz?')">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

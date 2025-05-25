@@ -1,0 +1,23 @@
+﻿@model List<ResultJobPostDto>
+@{
+    ViewData["Title"] = "İş İlanları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">📄 İş İlanları</h2>
+
+<div class="row">
+    @foreach (var job in Model)
+    {
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@job.Title</h5>
+                    <p class="card-text text-muted">@job.CompanyName - @job.Location</p>
+                    <p class="card-text">@job.Description.Substring(0, Math.Min(job.Description.Length, 100))...</p>
+                    <a href="/JobPost/Detail/@job.Id" class="btn btn-outline-primary btn-sm">Detay</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

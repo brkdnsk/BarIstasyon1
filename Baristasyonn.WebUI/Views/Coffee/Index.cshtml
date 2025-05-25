@@ -1,0 +1,30 @@
+﻿@model List<ResultCoffeeRecipeDto>
+@{
+    ViewData["Title"] = "Tüm Tarifler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">☕ Kahve Tarifleri</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Henüz hiç tarif bulunamadı.</div>
+}
+else
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow">
+                    <img src="@item.ImageUrl" class="card-img-top" style="height: 200px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Description</p>
+                        <a href="/Coffee/Detail/@item.Id" class="btn btn-outline-primary btn-sm">Detay</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

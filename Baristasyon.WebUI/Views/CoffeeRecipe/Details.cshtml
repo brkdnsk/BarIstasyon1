@@ -37,20 +37,21 @@
             </div>
 
             <!-- Puan Ver -->
-            <form asp-action="Rate" method="post" class="text-center mb-5">
-                <input type="hidden" asp-for="NewRating.UserId" value="@Model.CurrentUserId" />
-                <input type="hidden" asp-for="NewRating.CoffeeRecipeId" value="@Model.Recipe.Id" />
-                <select asp-for="NewRating.Score" class="form-select d-inline-block w-auto me-2">
-                    <option value="1">⭐ 1</option>
-                    <option value="2">⭐ 2</option>
-                    <option value="3">⭐ 3</option>
-                    <option value="4">⭐ 4</option>
-                    <option value="5">⭐ 5</option>
-                </select>
-                <button type="submit" class="btn btn-success">
-                    <i class="fa fa-star me-1"></i> Oy Ver
-                </button>
-            </form>
+           <form asp-action="Rate" method="post" class="text-center mb-5">
+    <input type="hidden" name="UserId" value="@Model.CurrentUserId" />
+    <input type="hidden" name="CoffeeRecipeId" value="@Model.Recipe.Id" />
+    <select name="Score" class="form-select d-inline-block w-auto me-2">
+        <option value="1">⭐ 1</option>
+        <option value="2">⭐ 2</option>
+        <option value="3">⭐ 3</option>
+        <option value="4">⭐ 4</option>
+        <option value="5">⭐ 5</option>
+    </select>
+    <button type="submit" class="btn btn-success">
+        <i class="fa fa-star me-1"></i> Oy Ver
+    </button>
+</form>
+ <for
 
             <!-- Yorumlar -->
             <div class="card shadow-sm border-0 mb-4">
@@ -82,18 +83,22 @@
                     <h5 class="mb-0"><i class="fa fa-pen me-1 text-coffee"></i>Yorum Yap</h5>
                 </div>
                 <div class="card-body">
-                    <form asp-action="AddReview" method="post">
-                        <input type="hidden" asp-for="NewReview.UserId" value="@Model.CurrentUserId" />
-                        <input type="hidden" asp-for="NewReview.CoffeeRecipeId" value="@Model.Recipe.Id" />
-                       
-                        <div class="mb-3">
-                            <textarea asp-for="NewReview.Comment" class="form-control" rows="4" placeholder="Yorumunuzu yazın..."></textarea>
-                        </div>
+              <form asp-action="AddReview" method="post">
+    <input type="hidden" name="UserId" value="@Model.CurrentUserId" />
+    <input type="hidden" name="CoffeeRecipeId" value="@Model.Recipe.Id" />
 
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-paper-plane me-1"></i> Gönder
-                        </button>
-                    </form>
+    <div class="mb-3">
+        <textarea name="Comment" class="form-control" rows="4" placeholder="Yorumunuzu yazın..." required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-paper-plane me-1"></i> Gönder
+    </button>
+</form>
+
+
+
+
                 </div>
             </div>
 

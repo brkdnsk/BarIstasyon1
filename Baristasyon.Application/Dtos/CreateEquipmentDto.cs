@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Baristasyon.Application.Dtos
+public class CreateEquipmentDto
 {
-    public class CreateEquipmentDto
-    {
-        public int UserId { get; set; }
-        public string Name { get; set; } = null!;
+    public int UserId { get; set; }
 
-        public string Description { get; set; } = null!;
-        public int CoffeeRecipeId { get; set; }
+    [Required(ErrorMessage = "Ekipman adı gereklidir.")]
+    public string Name { get; set; } = null!;
 
-        public string ImageUrl { get; set; } = null!;
-        public string Usage { get; set; } = null!;
-       
-    }
+    [Required(ErrorMessage = "Açıklama gereklidir.")]
+    public string Description { get; set; } = null!;
+
+    public int CoffeeRecipeId { get; set; }
+
+    [Required(ErrorMessage = "Görsel URL gereklidir.")]
+    public string ImageUrl { get; set; } = null!;
+
+    [Required(ErrorMessage = "Kullanım açıklaması gereklidir.")]
+    public string Usage { get; set; } = null!;
 }

@@ -1,0 +1,40 @@
+﻿@model UpdateEquipmentDto
+
+@{
+    ViewData["Title"] = "Ekipman Güncelle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (ViewBag.ApiError != null)
+{
+    <div class="alert alert-danger">@ViewBag.ApiError</div>
+}
+
+<h2 class="mb-4">✏️ Ekipman Güncelle</h2>
+
+<form asp-area="Admin" asp-controller="AdminEquipment" asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Ad</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Açıklama</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Kullanım</label>
+        <textarea asp-for="Usage" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Görsel URL</label>
+        <input asp-for="ImageUrl" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Kaydet</button>
+    <a href="/Admin/AdminEquipment" class="btn btn-secondary">İptal</a>
+</form>

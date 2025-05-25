@@ -63,15 +63,23 @@
 
 
 
-            [HttpPost]
-            public async Task<IActionResult> AddReview(CreateReviewDto dto)
-            {
-                var client = _httpClientFactory.CreateClient("api");
-                await client.PostAsJsonAsync("review", dto);
-                return RedirectToAction("Details", new { id = dto.CoffeeRecipeId }); // ✅ Önemli
-            }
+        [HttpPost]
+        public async Task<IActionResult> AddReview(CreateReviewDto dto)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null) return RedirectToAction("Login", "User");
 
-            [HttpPost]
+            dto.UserId = userId.Value; // 👈 kesin garanti
+
+            var client = _httpClientFactory.CreateClient("api");
+            await client.PostAsJsonAsync("review", dto);
+
+            return RedirectToAction("Details", new { id = dto.CoffeeRecipeId });
+        }
+
+
+
+        [HttpPost]
             public async Task<IActionResult> Rate(CreateRatingDto dto)
             {
                 var client = _httpClientFactory.CreateClient("api");

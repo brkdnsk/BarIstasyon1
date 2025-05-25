@@ -1,0 +1,83 @@
+﻿@model List<ResultCoffeeRecipeDto>
+@{
+    ViewData["Title"] = "Favori Tariflerim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .favorite-card {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+        .favorite-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    .favorite-img {
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+    }
+
+    .favorite-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #5e4b3c;
+    }
+
+    .favorite-text {
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .no-favorites {
+        background-color: #fff3cd;
+        color: #856404;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid #ffeeba;
+        text-align: center;
+    }
+</style>
+
+<div class="container py-5">
+    <h2 class="mb-4 text-center text-coffee">❤️ Favori Tariflerim</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="no-favorites">
+            <i class="fa-solid fa-heart-crack fa-lg me-2"></i>
+            Henüz favori tarif eklemediniz.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var recipe in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card favorite-card h-100">
+                        <img src="@recipe.ImageUrl" class="favorite-img" alt="@recipe.Title" />
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="favorite-title">@recipe.Title</h5>
+                                <p class="favorite-text">@recipe.Description</p>
+                            </div>
+                            <div class="mt-3">
+                                <a href="/Coffee/Detail/@recipe.Id" class="btn btn-outline-dark btn-sm w-100">
+                                    <i class="fa-solid fa-mug-hot me-1"></i> Detay
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

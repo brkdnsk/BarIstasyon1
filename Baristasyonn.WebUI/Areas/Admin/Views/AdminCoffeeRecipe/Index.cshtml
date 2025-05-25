@@ -1,0 +1,38 @@
+﻿@model List<Baristasyon.Application.Dtos.ResultCoffeeRecipeDto>
+@{
+    ViewData["Title"] = "Tarif Listesi";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-4">☕ Kahve Tarifleri</h2>
+
+<a class="btn btn-primary mb-3" href="/Admin/AdminCoffeeRecipe/Create">+ Yeni Tarif Ekle</a>
+
+<table class="table table-striped align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Görsel</th>
+            <th>Başlık</th>
+            <th>Yöntem</th>
+            <th>Süre (dk)</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><img src="@item.ImageUrl" style="width: 80px; height: 80px; object-fit: cover;" /></td>
+                <td>@item.Title</td>
+                <td>@item.Method</td>
+                <td>@item.BrewTime</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" href="/Admin/AdminCoffeeRecipe/Edit/@item.Id">Güncelle</a>
+                    <a class="btn btn-sm btn-danger"
+                       onclick="return confirm('Silmek istediğinizden emin misiniz?')"
+                       href="/Admin/AdminCoffeeRecipe/Delete/@item.Id">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

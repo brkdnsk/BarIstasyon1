@@ -1,0 +1,46 @@
+﻿@using Baristasyon.Application.Dtos
+@model UpdateJobPostDto
+
+@{
+    ViewData["Title"] = "İlanı Düzenle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-4">✏️ İlanı Düzenle</h2>
+
+@if (ViewBag.ApiError != null)
+{
+    <div class="alert alert-danger">@ViewBag.ApiError</div>
+}
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Başlık</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Şirket Adı</label>
+        <input asp-for="CompanyName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Konum</label>
+        <input asp-for="Location" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Açıklama</label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">İletişim E-Postası</label>
+        <input asp-for="ContactEmail" class="form-control" type="email" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+    <a href="/Admin/AdminJobPost" class="btn btn-secondary">İptal</a>
+</form>

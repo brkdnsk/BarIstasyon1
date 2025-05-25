@@ -42,7 +42,7 @@ namespace Baristasyon.Persistence.Services
         public async Task<bool> CreateAsync(CreateReviewDto dto)
         {
             var review = new Review
-            {
+            {   
                 UserId = dto.UserId,
                 CoffeeRecipeId = dto.CoffeeRecipeId,
                 Comment = dto.Comment,

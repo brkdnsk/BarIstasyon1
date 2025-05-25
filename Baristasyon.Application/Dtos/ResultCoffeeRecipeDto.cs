@@ -12,9 +12,9 @@ namespace Baristasyon.Application.Dtos
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string Method { get; set; } = null!;
-
         public string BrewTime { get; set; } = null!;
         public string ImageUrl { get; set; } = string.Empty;
-
+        public string Ingredients { get; set; } = null!;
     }
+
 }
