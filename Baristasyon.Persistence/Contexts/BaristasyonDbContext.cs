@@ -18,6 +18,9 @@ namespace Baristasyon.Persistence.Contexts
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Rating> Ratings { get; set; }
 
+        public DbSet<Blog> Blogs { get; set; }
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
