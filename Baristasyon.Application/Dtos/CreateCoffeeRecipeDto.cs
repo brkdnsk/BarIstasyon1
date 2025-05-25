@@ -15,6 +15,7 @@ namespace Baristasyon.Application.Dtos
         public int BrewTime { get; set; }
         public string Ingredients { get; set; } = null!;
         public string ImageUrl { get; set; } = null!;
+        public string? VideoUrl { get; set; }
     }
 
 }

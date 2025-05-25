@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +17,7 @@ namespace Baristasyon.Domain.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public string? ImageUrl { get; set; }
+        public string? VideoUrl { get; set; }
 
 
 

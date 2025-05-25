@@ -20,6 +20,16 @@
                     <p><strong>Demleme Süresi:</strong> @Model.Recipe.BrewTime dk</p>
                     <p><strong>Malzemeler:</strong> @Model.Recipe.Ingredients</p>
 
+                    @* 📹 Video URL Gösterimi *@
+                    @if (!string.IsNullOrEmpty(Model.Recipe.VideoUrl))
+                    {
+                        <hr />
+                        <h5>📹 Video Tarifi</h5>
+                        <div class="ratio ratio-16x9 mb-3">
+                            <iframe src="@Model.Recipe.VideoUrl" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    }
+
                     <hr />
                     <h5>⭐ Ortalama Puan: @Model.AverageRating.ToString("0.0") / 5</h5>
 

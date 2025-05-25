@@ -16,6 +16,8 @@ namespace Baristasyon.Application.Dtos
         public string Ingredients { get; set; } = null!;
         public string ImageUrl { get; set; } = string.Empty;
 
+        public string? VideoUrl { get; set; }
+
 
     }
 }
