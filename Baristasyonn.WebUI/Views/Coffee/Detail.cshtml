@@ -4,14 +4,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var userId = Context.Session.GetInt32("userId");
 }
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
 
-<div class="container py-4">
+<style>
+    .fade-in {
+        animation: fadeIn 0.7s ease-in-out;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .video-frame iframe {
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .card-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #4e342e;
+    }
+
+    .comment-box {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #f8f8f8;
+    }
+
+    .comment-box strong {
+        color: #6f4e37;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 5px #6f4e37;
+        border-color: #6f4e37;
+    }
+</style>
+
+<div class="container py-4 fade-in">
     <div class="row justify-content-center">
         <div class="col-md-8">
 
-            <!-- Tarif Kartı -->
-            <div class="card shadow-lg">
-                <img src="@Model.Recipe.ImageUrl" class="card-img-top" style="height: 300px; object-fit: cover;" />
+            <!-- ☕ Tarif Kartı -->
+            <div class="card shadow-lg mb-4">
+                <img src="@Model.Recipe.ImageUrl" class="card-img-top" style="height: 300px; object-fit: cover; border-top-left-radius: 12px; border-top-right-radius: 12px;" />
                 <div class="card-body">
                     <h2 class="card-title">@Model.Recipe.Title</h2>
                     <p class="card-text text-muted">@Model.Recipe.Description</p>
@@ -20,13 +72,12 @@
                     <p><strong>Demleme Süresi:</strong> @Model.Recipe.BrewTime dk</p>
                     <p><strong>Malzemeler:</strong> @Model.Recipe.Ingredients</p>
 
-                    @* 📹 Video URL Gösterimi *@
                     @if (!string.IsNullOrEmpty(Model.Recipe.VideoUrl))
                     {
                         <hr />
                         <h5>📹 Video Tarifi</h5>
-                        <div class="ratio ratio-16x9 mb-3">
-                            <iframe src="@Model.Recipe.VideoUrl" frameborder="0" allowfullscreen></iframe>
+                        <div class="ratio ratio-16x9 mb-3 video-frame">
+                            <iframe src="@Model.Recipe.VideoUrl" title="Tarif Videosu" frameborder="0" allowfullscreen></iframe>
                         </div>
                     }
 
@@ -35,17 +86,19 @@
 
                     @if (userId != null)
                     {
-                        <form asp-controller="Rating" asp-action="Rate" method="post" class="mb-3">
+                        <form asp-controller="Rating" asp-action="Rate" method="post" class="mb-3 d-flex align-items-center">
                             <input type="hidden" name="UserId" value="@userId" />
                             <input type="hidden" name="CoffeeRecipeId" value="@Model.Recipe.Id" />
-                            <label for="Score">Puanınız:</label>
-                            <select name="Score" class="form-select w-auto d-inline mx-2">
+                            <label for="Score" class="me-2">Puanınız:</label>
+                            <select name="Score" class="form-select w-auto me-2">
                                 @for (int i = 1; i <= 5; i++)
                                 {
                                     <option value="@i">@i</option>
                                 }
                             </select>
-                            <button type="submit" class="btn btn-sm btn-warning">Puanla</button>
+                            <button type="submit" class="btn btn-warning btn-sm">
+                                <i class="bi bi-star-fill me-1"></i>Puanla
+                            </button>
                         </form>
 
                         <form method="post" asp-controller="Favorite" asp-action="Toggle" asp-route-recipeId="@Model.Recipe.Id">
@@ -57,20 +110,20 @@
                     }
                     else
                     {
-                        <p class="text-muted">Favori & puanlama için giriş yapmalısınız.</p>
+                        <p class="text-muted mt-2">Favori & puanlama için <a href="/User/Login">giriş yapmalısınız</a>.</p>
                     }
                 </div>
             </div>
 
-            <!-- Yorumlar -->
-            <div class="mt-4">
-                <h5>💬 Yorumlar</h5>
+            <!-- 💬 Yorumlar -->
+            <div>
+                <h5 class="mb-3">💬 Yorumlar</h5>
 
                 @if (Model.Reviews.Any())
                 {
                     foreach (var review in Model.Reviews)
                     {
-                        <div class="border-bottom mb-2 pb-2">
+                        <div class="comment-box mb-2">
                             <strong>@review.Username</strong>
                             <p class="mb-1">@review.Comment</p>
                         </div>
@@ -87,14 +140,14 @@
                         <input type="hidden" name="CoffeeRecipeId" value="@Model.Recipe.Id" />
                         <input type="hidden" name="UserId" value="@userId" />
                         <div class="mb-2">
-                            <textarea name="Comment" class="form-control" placeholder="Yorumunuzu yazın..."></textarea>
+                            <textarea name="Comment" class="form-control" rows="3" placeholder="Yorumunuzu yazın..."></textarea>
                         </div>
-                        <button class="btn btn-primary btn-sm">Yorum Ekle</button>
+                        <button class="btn btn-primary btn-sm"><i class="bi bi-send-fill me-1"></i>Yorum Ekle</button>
                     </form>
                 }
                 else
                 {
-                    <p class="text-muted">Yorum eklemek için giriş yapmalısınız.</p>
+                    <p class="text-muted">Yorum eklemek için <a href="/User/Login">giriş yapmalısınız</a>.</p>
                 }
             </div>
 

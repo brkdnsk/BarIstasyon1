@@ -2,6 +2,7 @@
 using Baristasyonn.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Baristasyonn.WebUI.Controllers
 {
@@ -17,6 +18,7 @@ namespace Baristasyonn.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+
             var client = _httpClientFactory.CreateClient("api");
             var response = await client.GetAsync("coffeerecipe");
 
@@ -53,8 +55,11 @@ namespace Baristasyonn.WebUI.Controllers
             if (ratingResponse.IsSuccessStatusCode)
             {
                 var ratingJson = await ratingResponse.Content.ReadAsStringAsync();
-                double.TryParse(ratingJson, out average);
+                var ratingDto = JsonConvert.DeserializeObject<RatingAverageResponseDto>(ratingJson);
+                average = ratingDto?.Average ?? 0.0;
             }
+
+
 
             var viewModel = new CoffeeRecipeDetailViewModel
             {

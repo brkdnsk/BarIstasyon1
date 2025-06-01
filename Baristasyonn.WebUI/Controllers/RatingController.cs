@@ -16,9 +16,19 @@ namespace Baristasyonn.WebUI.Controllers
         public async Task<IActionResult> Rate(CreateRatingDto dto)
         {
             var client = _httpClientFactory.CreateClient("api");
-            await client.PostAsJsonAsync("rating", dto);
+            var response = await client.PostAsJsonAsync("rating", dto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "Puanınız kaydedildi!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Puan kaydedilirken bir hata oluştu.";
+            }
 
             return RedirectToAction("Detail", "Coffee", new { id = dto.CoffeeRecipeId });
         }
+
     }
-    }
+}

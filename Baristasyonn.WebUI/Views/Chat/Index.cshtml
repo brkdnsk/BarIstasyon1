@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Kahve Chat Botu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-dark text-white text-center rounded-top-4">
+                    <h3 class="mb-0">☕ Barİstasyon Sohbet Botu</h3>
+                    <small class="text-light">Kahve hakkında merak ettiklerini sor!</small>
+                </div>
+                <div class="card-body bg-light">
+
+                    <div class="text-center mb-4">
+                        <img src="https://miro.medium.com/v2/resize:fit:1400/1*EfE7hyDVRYRIZRVIJzE5Sw.jpeg"
+                             class="img-fluid rounded" style="max-height: 150px;" alt="Coffee Bot" />
+                    </div>
+
+                    <form method="post" asp-controller="Chat" asp-action="Ask">
+                        <div class="form-group">
+                            <label class="fw-bold">Ne öğrenmek istiyorsun?</label>
+                            <input type="text" name="question" class="form-control rounded-pill px-4 py-2" placeholder="Örn: Flat white nedir?" required />
+                        </div>
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-outline-primary rounded-pill">
+                                🤖 Soruyu Gönder
+                            </button>
+                        </div>
+                    </form>
+
+                    @if (ViewBag.Answer != null)
+                    {
+                        <div class="mt-4 p-3 bg-white border rounded-3 shadow-sm">
+                            <p><strong>📨 Sorun:</strong> @ViewBag.Question</p>
+                            <hr />
+                            <p><strong>💬 Bot Cevabı:</strong></p>
+                            <div class="alert alert-success">
+                                @ViewBag.Answer
+                            </div>
+
+                            <div class="text-end">
+                                <a class="btn btn-sm btn-link" href="https://chat.openai.com" target="_blank">
+                                    🔗 OpenAI'ye Git
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,7 +2,263 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero-section" style="background-image: url('https://images.pexels.com/photos/2159135/pexels-photo-2159135.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); background-size: cover; background-position: center; height: 400px; display: flex; align-items: center; justify-content: center;">
+    <div class="text-center text-white bg-dark bg-opacity-50 p-4 rounded">
+        <h1 class="display-4 fw-bold">Baristasyon'a Hoş Geldiniz</h1>
+        <p class="lead">Kahve kültürüne dair her şey bir tık uzağınızda!</p>
+    </div>
 </div>
+
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col">
+            <h2 class="mb-4">☕ Popüler Tarifler</h2>
+            <div class="row">
+                <!-- Latte -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg" class="card-img-top" alt="Latte">
+                        <div class="card-body">
+                            <h5 class="card-title">Latte</h5>
+                            <p class="card-text">Süt köpüğüyle yumuşacık kahve keyfi.</p>
+                            <a href="/Coffee/Detail/1" class="btn btn-outline-primary btn-sm">Detay</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Americano -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://cdn.shopify.com/s/files/1/1995/9093/files/bir-fincan-sutlu-americano.jpg?v=1678195188" class="card-img-top" alt="Americano">
+                        <div class="card-body">
+                            <h5 class="card-title">Americano</h5>
+                            <p class="card-text">Espresso'nun sıcak suyla seyreltilmiş versiyonu.</p>
+                            <a href="/Coffee/Detail/5" class="btn btn-outline-primary btn-sm">Detay</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Espresso -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://resources.koha.net/images/2024/March/22/espresso.docx-11711096152.jpg?w=1200&r=fill&q=90" class="card-img-top" alt="Espresso">
+                        <div class="card-body">
+                            <h5 class="card-title">Espresso</h5>
+                            <p class="card-text">Kısa, yoğun ve sert kahve deneyimi.</p>
+                            <a href="/Coffee/Detail/6" class="btn btn-outline-primary btn-sm">Detay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col">
+            <h2 class="mb-4"><i class="bi bi-tools"></i> Ekipmanlar</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://www.chopi.com.tr/wp-content/uploads/2024/01/ucuz-kaliteli-chemex-kahve-demleme-ekipmani-600ml-1.jpeg" class="card-img-top" alt="Chemex">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Chemex</h5>
+                            <a href="/Equipment" class="btn btn-success btn-sm">Görüntüle</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="https://luwakshop.com/wp-content/uploads/2022/05/kopi-luwak-kahve-ekipmanlari.jpg" class="card-img-top" alt="V60">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">V60</h5>
+                            <a href="/Equipment" class="btn btn-success btn-sm">Görüntüle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col">
+            <h2 class="mb-4"><i class="bi bi-briefcase"></i> En Yeni İş İlanları</h2>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Barista - İstanbul <span class="badge bg-primary rounded-pill">Yeni</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Kahve Uzmanı - İzmir <span class="badge bg-primary rounded-pill">Yeni</span>
+                </li>
+            </ul>
+            <a href="/JobPost" class="btn btn-outline-dark btn-sm mt-3">Tümünü Gör</a>
+        </div>
+    </div>
+
+    <hr />    <hr />
+
+    <div class="row mb-5">
+        <div class="col">
+            <h2 class="mb-4"><i class="bi bi-lightbulb"></i> Demleme İpuçları</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">☕ Su Sıcaklığına Dikkat</h5>
+                            <p class="card-text">Kahve demlemede su sıcaklığı 90-96°C arası olmalı. Daha yüksek sıcaklık acılığa neden olabilir.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">📏 Doğru Ölçüm</h5>
+                            <p class="card-text">Kahve-su oranı önemlidir. Genellikle 1:15 oranı önerilir (1 gram kahveye 15 gram su).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">🌀 Dairesel Döküm</h5>
+                            <p class="card-text">Filtre kahvede dairesel hareketlerle su dökerek daha dengeli demleme sağlayabilirsin.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">⏳ Ön Islatma (Blooming)</h5>
+                            <p class="card-text">Demlemeye başlamadan önce kahveyi 30 saniye ön ıslatmak, aromaların açığa çıkmasını sağlar.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">🧼 Ekipman Temizliği</h5>
+                            <p class="card-text">Her demlemeden sonra ekipmanlarını temizlemek, kahvenin tadını bozabilecek kalıntıları engeller.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">🌱 Taze Öğütme</h5>
+                            <p class="card-text">Kahve çekirdeklerini demlemeden hemen önce öğütmek, en yoğun aroma ve tazeliği sunar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+
+    <!-- Hakkımızda Bölümü -->
+    <section class="about-section py-5" style="background: linear-gradient(to right, #f4e7da, #fff);">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Sol: Görsel -->
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="about-img-wrapper shadow" style="border-radius: 15px; overflow: hidden; animation: floatInLeft 1s ease-out;">
+                        <img src="https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Baristasyon Hakkında" class="img-fluid w-100" />
+                    </div>
+                </div>
+
+                <!-- Sağ: Metin + Sayılar -->
+                <div class="col-lg-6">
+                    <div class="p-4 bg-white rounded shadow-lg" style="border-left: 6px solid #6f4e37; animation: floatInRight 1s ease-out;">
+                        <h2 class="mb-3 text-dark fw-bold">☕ Baristasyon Hakkında</h2>
+                        <p style="color: #5d4037; font-size: 1.1rem;">
+                            Baristasyon, <strong>kahve kültürünü teknolojiyle buluşturan</strong> dijital bir platformdur.
+                            Amacımız sadece tarif sunmak değil; <em>bir topluluk oluşturmak</em>, sizi bir fincanın etrafında birleştirmek.
+                        </p>
+                        <div class="row text-center mt-4">
+                            <div class="col-4">
+                                <h3 class="text-primary fw-bold counter" data-target="400">0</h3>
+                                <p class="small text-muted">Tarif</p>
+                            </div>
+                            <div class="col-4">
+                                <h3 class="text-success fw-bold counter" data-target="120">0</h3>
+                                <p class="small text-muted">Ekipman</p>
+                            </div>
+                            <div class="col-4">
+                                <h3 class="text-danger fw-bold counter" data-target="75">0</h3>
+                                <p class="small text-muted">İş İlanı</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Animasyonlar -->
+<style>
+    .animated-icon {
+        opacity: 0;
+        transform: translateY(-15px);
+        animation: iconFadeIn 1s ease-out forwards;
+        font-size: 2rem;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    @@keyframes iconFadeIn {
+        to
+
+    {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+    @@keyframes floatInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @@keyframes floatInRight {
+        from {
+            opacity: 0;
+            transform: translateX(40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+</style>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.counter').forEach(counter => {
+            counter.innerText = '0';
+            const updateCounter = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / 100;
+
+                if (count < target) {
+                    counter.innerText = `${Math.ceil(count + increment)}`;
+                    setTimeout(updateCounter, 20);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCounter();
+        });
+    </script>
+}

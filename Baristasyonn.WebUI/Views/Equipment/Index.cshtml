@@ -4,21 +4,88 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4">☕ Kahve Demleme Ekipmanları</h2>
+<style>
+    .equipment-card {
+        transition: all 0.3s ease;
+        border: none;
+        border-radius: 15px;
+    }
 
-<div class="row">
-    @foreach (var item in Model)
+        .equipment-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+    .equipment-img {
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .equipment-body h5 {
+        font-weight: bold;
+        color: #4e342e;
+    }
+
+    .equipment-body p {
+        color: #5d4037;
+        font-size: 0.95rem;
+    }
+
+    .equipment-usage {
+        font-size: 0.9rem;
+        background-color: #f8f1e7;
+        padding: 6px 12px;
+        border-radius: 8px;
+        display: inline-block;
+        margin-top: 10px;
+        color: #6f4e37;
+        font-weight: 500;
+    }
+
+    @@keyframes slideUp {
+        from
+
     {
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                <img src="@item.ImageUrl" class="card-img-top" style="height: 200px; object-fit: cover;" />
-                <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
-                    <p class="card-text">@item.Description</p>
-                    <p><strong>Kullanım:</strong> @item.Usage</p>
-                    <p><strong>Tür:</strong> @item.Type</p>
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    .fade-in {
+        animation: slideUp 0.5s ease-in-out;
+    }
+</style>
+
+<h2 class="mb-4">🛠️ Kahve Demleme Ekipmanları</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">Hiç ekipman bulunamadı.</div>
+}
+else
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4 fade-in">
+                <div class="card equipment-card h-100">
+                    <img src="@item.ImageUrl" alt="@item.Name" class="card-img-top equipment-img" />
+                    <div class="card-body equipment-body">
+                        <h5>@item.Name</h5>
+                        <p>@item.Description</p>
+                        <p><strong>Kullanım:</strong> @item.Usage</p>
+                        
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+}
